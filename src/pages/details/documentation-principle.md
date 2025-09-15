@@ -74,6 +74,34 @@ To annotate the entities that are transformed and created in the processes, Inpu
 
 Different entities of data, stemming from distinct process setups or parallel measurements of distinct input samples, are often stored together in the same data file. In these cases, referencing the data file does not unambiguously represent the provenance graph. Therefore, following well established semantic web standards, Data Fragment Selectors can be appended to the file path to annotate specific fragments of these files.
 
+Data-Fragment annotation
+
+### Data Fragment Annotation
+
+When a single data file aggregates measurements from different samples, conditions, or steps, pointing only to the file path is too coarse to reconstruct provenance. To make such files unambiguous and reusable, ARC supports Data Fragment Selectors (DFS): compact, file-format–aware pointers that reference precise regions within a file. 
+
+![Documentation Principle](/documentation-principle-DFS-ISA.png)
+
+Data Fragments consist of two parts: a segment identifier (or pointer), which is a simple text representing a specific portion of a file, and a specification URL, which describes how to interpret this identifier. Through keeping this specification variable, Data Fragment Selectors can be used to basically point to any kind of segment in any kind of file. E.g.: `col=5` (a column in a table), `xywh=100,200,50,50` (a rectangular region in an image) or `t=5-15` (a time slice in a signal).
+
+Practically, a selector is appended to the file’s URI as a fragment (after #), such as `results.tsv#cell=col=5`. The accompanying fragment identification specification in this case would be [RFC71111](https://datatracker.ietf.org/doc/html/rfc7111). In the web-world, many Data Fragment Selectors already enjoy frequent usage. For example, you can access this section of this page following the full URL https://arc-rdm.org/details/documentation-principle#data-fragment-annotation.
+
+![Documentation Principle](/documentation-principle-DFS.png)
+
+By encoding all information needed to both understand the data file structure and find the data file segment in question, we can look at data file structure and metadata annotation separately. The two can evolve independently: you can reorganize a file (e.g., reorder columns) and update the selector without rewriting your scientific description, or refine the description (e.g., add an ontology term or unit) without touching the file. This simple separation is what enables fragment-level FAIRness in ARC: machine-actionable, precise, and portable annotations that scale from whole files down to individual cells. 
+
+## Datamap
+
+A Datamap is the lightweight container that carries those fragment-level annotations. Conceptually, it is a collection of Data Contexts, where each Data Context binds one Data Fragment to additional metadata: what the fragment represents (e.g., “glucose concentration”) and how to interpret values (units, datatype). Each Data Context is a small, explicit annotation of a singular data entity, enriched through the use of ontologies. A Datamap therefore lets software parse heterogeneous files reliably and validate values against controlled vocabularies. 
+
+![Documentation Principle](/documentation-principle-DataContext.png)
+
+In ARC, the Datamap is intentionally file-format agnostic and exchangeable. It can be authored as a tabular sheet with fixed columns (ISA-XLSX style), where each row is a Data Context for one fragment, and it can be serialized as a JSON-LD view inside the ARC’s RO-Crate representation. These two serializations are different views on the same abstract model and map one-to-one.
+
+![Documentation Principle](/documentation-principle-Datamap-XLSX.png)
+
+The Datamap holds an important spot in the ARCs annotatation principle. It allows to statically schematize and annotate data entities,often orthogonally to the provenance annotation. By colocating the Datamap and Data within your ARC, you keep the dataset’s internal structure transparent, bind it to shared vocabularies, and make fragment-level provenance and reuse straightforward for both humans and machines
+
 ----------
 
 These conventions ensure a structured and consistent approach to annotating complex experimental workflows, making the data more traceable and understandable.
