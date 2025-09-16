@@ -78,7 +78,7 @@ Data-Fragment annotation
 
 ### Data Fragment Annotation
 
-When a single data file aggregates measurements from different samples, conditions, or steps, pointing only to the file path is too coarse to reconstruct provenance. To make such files unambiguous and reusable, ARC supports Data Fragment Selectors (DFS): compact, file-format–aware pointers that reference precise regions within a file. 
+When a single data file aggregates measurements from different samples, conditions, or steps, pointing only to the file path is too coarse to reconstruct provenance. To make such files unambiguous and reusable, ARC supports Data Fragment Selectors (DFS): compact, file-format–aware pointers that reference precise regions within a file.
 
 ![Documentation Principle](/documentation-principle-DFS-ISA.png)
 
@@ -92,7 +92,7 @@ By encoding all information needed to both understand the data file structure an
 
 ## Datamap
 
-A Datamap is the lightweight container that carries those fragment-level annotations. Conceptually, it is a collection of Data Contexts, where each Data Context binds one Data Fragment to additional metadata: what the fragment represents (e.g., “glucose concentration”) and how to interpret values (units, datatype). Each Data Context is a small, explicit annotation of a singular data entity, enriched through the use of ontologies. A Datamap therefore lets software parse heterogeneous files reliably and validate values against controlled vocabularies. 
+A Datamap is the lightweight container that carries those fragment-level annotations. Conceptually, it is a collection of Data Contexts, where each Data Context binds one Data Fragment to additional metadata: what the fragment represents (e.g., “glucose concentration”) and how to interpret values (units, datatype). Each Data Context is a small, explicit annotation of a singular data entity, enriched through the use of ontologies. A Datamap therefore lets software parse heterogeneous files reliably and validate values against controlled vocabularies.
 
 ![Documentation Principle](/documentation-principle-DataContext.png)
 
@@ -100,7 +100,7 @@ In ARC, the Datamap is intentionally file-format agnostic and exchangeable. It c
 
 ![Documentation Principle](/documentation-principle-Datamap-XLSX.png)
 
-The Datamap holds an important spot in the ARCs annotatation principle. It allows to statically schematize and annotate data entities,often orthogonally to the provenance annotation. By colocating the Datamap and Data within your ARC, you keep the dataset’s internal structure transparent, bind it to shared vocabularies, and make fragment-level provenance and reuse straightforward for both humans and machines
+The Datamap holds an important spot in the ARCs annotation principle. It allows to statically schematize and annotate data entities, often orthogonally to the provenance annotation. By co-locating the Datamap and dataset within your ARC, you keep the dataset’s internal structure transparent, bind it to shared vocabularies, and make fragment-level provenance and reuse straightforward for both humans and machines.
 
 ----------
 
